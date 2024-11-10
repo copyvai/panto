@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { FaShopify, FaBars } from "react-icons/fa6";
 import { FaTimes } from "react-icons/fa";
@@ -29,13 +29,26 @@ const navItems = [
 
 const Navbar = () => {
   const [isMenuOpen, setiIsMenuOpen]=useState(false) //for mobail
+  const [isScrollbar, setScrollbar]=useState(false)
 
      // for mobail
   const toggleMenu =()=>{
            setiIsMenuOpen(prev => !prev)
   }
+
+  // scroolbar bg
+
+    useEffect(()=>{
+      window.addEventListener('scroll',()=>{
+        if(scrollY >50){
+          setScrollbar(true)
+        }else{
+          setScrollbar(false)
+        }
+      })
+    },[])
   return (
-   <header className='fixed top-0 right-0 z-50 w-full transition duration-300 ease-in-out text-white'>
+   <header className={`fixed top-0 right-0 z-50 w-full transition duration-300 ease-in-out  ${isScrollbar?'bg-white shadow-md':'bg-transparent text-white'}`}>
      <nav className='max-w-screen-2xl container mx-auto flex justify-between items-center py-6 px-10'>
         {/* logo */}
         <Link className='text-xl font-bold' to={'/'}>Panto</Link>
